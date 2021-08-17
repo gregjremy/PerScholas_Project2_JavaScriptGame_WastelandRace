@@ -13,7 +13,26 @@ class Player{
         this.name = Name
         this.class = Class
     }
+    rollDie(){              //Method to determine move
+        let roll = Math.floor(Math.random() * (9 - 1)) + 1;     // Generate a number 1-8
+        if(roll <= 4){
+            console.log(roll, " Move forward by " + roll)  // If 4 or less is rolled, move forward by that number
+        }
+        else if(roll == 5){
+            console.log(roll, " Move back by 1")     // "If...5...rolled", move back 1
+        }
+        else if(roll == 6){
+            console.log(roll, " Move back by 2")    // "If...6...rolled", move back 2
+        }
+        else if(roll == 7){
+            console.log(roll, " Random event triggered") // "If...7...rolled", start a random event
+        }
+        else if(roll == 8){
+            console.log(roll, " Duel Imminent! Get ready for battle!")
+        }
+    }
 }
+
 
 // ***************Player Objects***************
 
@@ -43,7 +62,8 @@ let computerAlpha = new Player("Alpha", "Randomly Selected")
 
 // -33 squares/blocks to move in total
 // -Every other block has a "Random Event" that can help or hinder the player that lands on it
-// -
+
+
 
 // ***************ROUND STRUCTURE & LOOP***************
 
@@ -57,3 +77,4 @@ let computerAlpha = new Player("Alpha", "Randomly Selected")
 
 
 // ******************************TEST AREA******************************
+playerOne.rollDie()
