@@ -9,42 +9,49 @@
 
 // ***************Class Template***************
 class Player{
-    constructor(Name,Class){
-        this.name = Name
-        this.class = Class
+    constructor(name){
+        this.name = name
+        this.playerPosition = 0
     }
-    rollDie(){              //Method to determine move
-        let roll = Math.floor(Math.random() * (9 - 1)) + 1;     // Generate a number 1-8
-        if(roll <= 4){
-            console.log(roll, " Move forward by " + roll)  // If 4 or less is rolled, move forward by that number
+    rollGameDie(){              //Method to determine move
+        let roll = Math.floor(Math.random() * (7 - (-2))) + (-2);     // Generate a number (-2)-6
+        if(roll === 0){ 
+            this.rollGameDie()  // If 0 is rolled, re-roll
         }
-        else if(roll == 5){
-            console.log(roll, " Move back by 1")     // "If...5...rolled", move back 1
+        else if(roll < 0){  // If a number less than 0 is rolled, move back by the AbVal of that number
+            console.log(roll, " Move back by the absolute value of " + roll)  
         }
-        else if(roll == 6){
-            console.log(roll, " Move back by 2")    // "If...6...rolled", move back 2
+        else if(roll > 0 && roll <=5){
+            console.log(roll, " Move forward by " + roll)     // If 5 or less is rolled, move forward by that number
         }
-        else if(roll == 7){
-            console.log(roll, " Random event triggered") // "If...7...rolled", start a random event
-        }
-        else if(roll == 8){
-            console.log(roll, " Duel Imminent! Get ready for battle!")
+        else if(roll === 6){
+            console.log(roll, " Random event triggered") // "If...6...rolled", start a random event
         }
     }
-}
+    rollDuelDie(){  // Define a Method for players to roll a "Duel Dye"(only #s from (-2)-4)
+        let numRolled = (Math.floor(Math.random() * (5 - (-2)) + (-2))) // ...Rolls a number b/w (-2)-4
+        if(numRolled == 0){
+            this.rollDuelDie()  // If the number rolled is 0, then re-roll
+        }
+        else console.log(numRolled) // Otherwise return the number rolled
+    }        
+}    
+
+        
+
 
 
 // ***************Player Objects***************
-
+const playersArray = [
 // *****User*****
-const playerOne = new Player("*User Input*", "*User Select*")        
+playerOne = new Player("*User Input*"),
 // I plan on making this fill in with whatever the user inputs their name as; also class will be picked before
 //  game starts
 
 // *****AI Opponent(s)*****
-let computerAlpha = new Player("Alpha", "Randomly Selected")        
+computerAlpha = new Player("Alpha")        
 // Will need to randomly assign a class to AI Player in pregame setup
-
+]
 
 
 // ******************************GAME STRUCTURE******************************
@@ -61,9 +68,31 @@ let computerAlpha = new Player("Alpha", "Randomly Selected")
 // ***************GAMEBOARD SETUP***************
 
 // -33 squares/blocks to move in total
-// -Every other block has a "Random Event" that can help or hinder the player that lands on it
+// -Every third block has either a "Duel" or a "Random Event" that can help or hinder the player that lands on it
+
+// Board Squares Class template
+class Block{
+    constructor(blockPosition){
+        this.position = blockPosition
+        this.special = "Random Event" || "Move Forward" || "Move Back" || "None"
+    }
+    initRandomEvent(){  // will include a function for "rollAgain" "loseNextTurn" "moveForward2" "moveBackward1" & "R.E."
+
+    }
+    teleportAhead(x){    
+        console.log(playersArray[x].playerPosition += 5)    // Instantly makes a player jump ahead 5 spaces
+    }
 
 
+}
+
+// Array of created Blocks/Squares
+const gameBoard = [
+    blockOne = new Block(1),
+    blockTwo = new Block(2),
+    blockThree = new Block(3)
+    
+]
 
 // ***************ROUND STRUCTURE & LOOP***************
 
@@ -77,4 +106,3 @@ let computerAlpha = new Player("Alpha", "Randomly Selected")
 
 
 // ******************************TEST AREA******************************
-playerOne.rollDie()
