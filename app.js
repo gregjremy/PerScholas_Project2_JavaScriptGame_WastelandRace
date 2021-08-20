@@ -11,7 +11,7 @@
 class Player{
     constructor(name, playerPosition){
         this.name = name
-        this.playerPosition = playerPosition || 20
+        this.playerPosition = 0
     }
 
     rollGameDie(){              //Method to determine Move
@@ -22,11 +22,11 @@ class Player{
             this.rollGameDie()  // If 0 is rolled, roll again
         }
         else if(roll < 0){  // If a number less than 0 is rolled, Move back by the AbVal of that number
-            console.log(" Moved Down " + roll)
+            console.log(this.name + " Moved Down " + roll)
             return this.playerPosition += roll  // return 
         }
         else if(roll > 0 && roll <=5){
-            console.log(" Moved Up " + roll)
+            console.log(this.name + " Moved Up " + roll)
             return this.playerPosition += roll     // If a number less than 5 but more than 0 is rolled, Move forward by that number
         }
         else if(roll === 6){
@@ -55,11 +55,11 @@ class Player{
 
         }
         else if(roll == 3){ // If 3 is rolled...
-            console.log(" Player moves up")
+            console.log(this.name + " moves up")
             return this.playerPosition += 2 // Move player up 2 
         }
         else if(roll == 4){ // If 4 is rolled...
-            console.log(" Player moves down")
+            console.log(this.name + " moves down")
             return this.playerPosition -= 1 // Move player back 1
         }
         else if(roll == 5){ // If 5 is rolled...
@@ -87,11 +87,11 @@ class Player{
             this.initDuel() // If player and AI roll the same, both roll again
         }
         else if(playerOneRoll > computerAlphaRoll){
-            console.log("Player wins")
+            console.log(playerOne.name + " wins")
             playerOne.playerPosition ++, computerAlpha.playerPosition --    // If player rolls higher: player moves ahead 1, AI moves back 1
         }
         else if(computerAlphaRoll > playerOneRoll){
-            console.log("AI wins")
+            console.log(computerAlpha.name + " wins")
             computerAlpha.playerPosition ++, playerOne.playerPosition --    // If AI rolls higher; AI moves ahead 1, player moves back 1
         }        
     }
@@ -122,7 +122,7 @@ playerOne = new Player("Greg"),
 //  game starts
 
 // AI Opponent(s)
-computerAlpha = new Player("Alpha", 10)        
+computerAlpha = new Player("Alpha")        
 // Will need to randomly assign a Trait to AI Player in pregame setup
 ]
 
@@ -200,8 +200,31 @@ const gameBoard = [
     // (4) If not, check to see if the player is on a special block; if so, execute that special
     // (5) Next player's turn to roll and execute; continue looping until a player gets past Block 33
 
+// Game loop
+while(playerOne.playerPosition < 34 && computerAlpha.playerPosition < 34){  // While either player's position is less than 34...
+    playerOne.rollGameDie()
+    if(playerOne.playerPosition>34){
+        console.log(playerOne.name + " reached the Bunker! There was only one spot left. All other players will be left to toil in the Wasteland. Game Over")
+        break
+    }
+    computerAlpha.rollGameDie()
+    if(computerAlpha.playerPosition>34){
+        console.log(computerAlpha.name + " reached the Bunker! There was only one spot left. All other players will be left to toil in the Wasteland. Game Over")
+        break
+    }
+
+}
+
+// const gameObject = {
+//     runGame: function(){
+//     while(playersArray.playerPosition < 34){
+
+//     }
+//     }
+// }
+
 
 
 // ******************************TEST AREA******************************
-computerAlpha.initRandomEvent()
-console.log(playersArray)
+console.log(playerOne.playerPosition)
+console.log(computerAlpha.playerPosition)
